@@ -1,35 +1,40 @@
-const express = require("express"),
-  bodyparser = require("body-parser");
-const app = express();
-const route = require("./routes");
+const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
-const path = require("path");
-const handlebars = require("express-handlebars").engine;
+const userRoutes = require("./routes/UserRoutes");
+const productRoutes = require("./routes/ProductRoutes");
+const categoryRoutes = require("./routes/CategoryRoutes");
+const orderRoutes = require("./routes/OrderRoutes");
 
-const db = require("./config/db");
+const port = process.env.PORT || 6000;
+const MONGO_URL =
+  process.env.MONGO_URL || "mongodb://localhost:27017/pt_shop_flower";
 
-// Middleware
-app.use(bodyparser.urlencoded({ extended: false }));
-
-// Template engine
-app.engine(
-  "handlebars",
-  handlebars({
-    helpers: {
-      sum: (a, b) => a + b,
-    },
-  })
-);
-app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname, "resourses//views"));
-
-//Connect to DB
-db.connect();
+const app = express();
+require("dotenv").config();
 
 app.use(cors());
-// Route init
-route(app);
-app.listen(3000, () => {
-  console.log(`Listening on port 3000`);
+app.use(express.json());
+
+app.use("/api/auth", userRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/order", orderRoutes);
+
+mongoose
+  .connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB connection Successfully!");
+  })
+  .catch((err) => {
+    console.log("DB Connection fail! ");
+    console.log("Message: " + err);
+  });
+
+const server = app.listen(port, () => {
+  console.log(`Server started with port ${port}`);
 });
