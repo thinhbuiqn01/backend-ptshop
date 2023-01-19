@@ -1,0 +1,28 @@
+<h2>Chỉnh sửa sản phẩm</h2>
+<form method="POST" action="/products/{{product._id}}">
+  <div class="form-group">
+    <label for="title">title</label>
+    <input type="text" class="form-control" value="{{product.title}}" id="title" name="title">
+  </div>
+  <div class="form-group">
+    <label for="price">price</label>
+    <input type="text" class="form-control" value="{{product.price}}" id="price" name="price">
+  </div>
+  <div class="form-group">
+    <label for="image01">image01</label>
+    <input type="text" class="form-control disabled" disabled="disabled"  value="{{product.image01}}" id="image01" name="image01">
+  </div>
+  <div class="form-group">
+    <label for="image02">image02</label>
+    <input type="text" class="form-control" disabled="disabled" value="{{product.image02}}" id="image02" name="image02">
+  </div>
+  <div class="form-group">
+    <label for="categorySlug">categorySlug</label>
+    <input type="text" class="form-control" disabled="disabled" value="{{product.categorySlug}}" id="categorySlug" name="categorySlug">
+  </div>
+  <div class="form-group">
+    <label for="description">description</label>
+    <textarea class="form-control" id="description" name="description">{{product.description}} </textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+</form>
