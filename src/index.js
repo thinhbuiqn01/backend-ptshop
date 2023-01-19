@@ -30,4 +30,6 @@ db.connect();
 app.use(cors());
 // Route init
 route(app);
-app.listen(3001);
+app.listen(3000, () => {
+  console.log(`Listening on port 3000`);
+});
